@@ -1,0 +1,12 @@
+# Budgets for the development loop (architecture.md section 24.4).
+# Paid runs stay disabled until every field under `paid` is set by the user.
+
+offline:
+  max_repair_cycles: 3
+  max_active_attempts: 1
+
+paid:
+  spend_ceiling_usd: null
+  max_fresh_runs: null
+  per_run_deadline_s: null
+  experiment_deadline_s: null

@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "retrieved_at": "2026-09-30",
+  "note": "Pinned upstream sources and observed runtime facts. Change only through a harness spec; a change invalidates evidence recorded under the previous lock digest.",
+  "repos": {
+    "soma": {
+      "url": "https://github.com/DendriteHQ/SOMA.git",
+      "sha": "e83a8df8b4b5e7f0ee48c4014f153ed611dc37b0",
+      "commit_date": "2026-09-28T15:40:34+01:00",
+      "files": {
+        "mcp_platform/app/api/routes/scoring.py": "82b3e8f784104a278a3707ecaac6c06c7f554e44aa5a32186de422dabd7af597",
+        "mcp_platform/app/services/incentive_calculator.py": "24b5e39c61efe9ea7dd748f705796cb9e51b634dcb2f3ff63b283e57da64bd21",
+        "mcp_platform/app/services/complexity.py": "1101ac427cf12875035d6378f3eb7c544e1126e6436ac36d6dce459826c5e46f",
+        "mcp_platform/app/services/swebench_screening.py": "3ceb15e7c16667f56c934c65357709e01af8db7e99abaa0939c73f226c112ad3",
+        "mcp_platform/app/core/config.py": "0c8b4278edddd25f7336595c009c93946f13a64a2e05a36df09615738da5ce7e",
+        "miner/README_prompting.md": "a7d650fd5f521f57c74dd18c111510d267fcfa2b2f5893fb93c13acf1b91addf",
+        "docs/miner/scoring.md": "21c28640094482836d6cdfc89ffd0bb8fbf0d939cad295c46bcec33aabc06f28",
+        "docs/miner/INCENTIVE_MECHANISM.md": "79bf36f1ca097511b7e6326f75e9a672a9716ad144e822ba7b92594df3f0ac3b",
+        "docs/miner/openrouter-setup.md": "6ae13d255de1df87c6f986ba78e716ea18b10d604440c537fdd7688a35ef5735"
+      }
+    },
+    "soma_benchmark": {
+      "url": "https://github.com/DendriteHQ/SOMA-benchmark.git",
+      "sha": "204ff7f1b9bf6bdca5c2fb59ffd990df5fbee052",
+      "commit_date": "2026-09-24T08:35:30+00:00",
+      "files": {
+        "src/compression_service/app/main.py": "662868f2ea4703608688c341838ee94640f1956d43b9deb740e90f7d6a52f5d4",
+        "src/compression_service/app/proxy.py": "d2482ed79f0d015c319e869429e473b2eda05b8a8263fde201972127d9b4ca98",
+        "src/compression_service/app/base_miner.py": "1127d18d9adbea857a5db995fa29004dc9ab6c19917788d182f37276cf224639",
+        "src/compression_service/requirements.txt": "e0c049d3ed981d72550ae96fc47a2c41336d5f2b58565f9e35482f3e1a7c8ec1",
+        "src/compression_service/Dockerfile": "dcf2a59b26691dde8aff4efc5d240033ec1001cb8b1159eea526e918c86427ea"
+      }
+    },
+    "soma_plugin": {
+      "url": "https://github.com/DendriteHQ/SOMA-plugin.git",
+      "sha": "36b988151c43eb9fb9d53cc7745f4a17a32537cb",
+      "commit_date": "2026-06-09",
+      "files": {},
+      "role": "OpenClaw context-engine plugin ('somarizer'); POSTs to ${SOMA_COMPRESSION_SERVICE_URL}/compress"
+    },
+    "reference_compressor": {
+      "url": "https://github.com/DendriteHQ/SOMA-OpenClaw-compressor.git",
+      "sha": "1417ae514cfb69c1967bc07b112ef5a563330164",
+      "commit_date": "2026-08-05",
+      "files": {},
+      "role": "Public reference compressor. Entry handle_assemble(payload) in soma_compressor.py; OpenClaw-native roles (toolResult/toolCallId); no compress_messages, so it needs an adapter to serve as benchmark arm B."
+    }
+  },
+  "runtime": {
+    "python": "3.12 (compression service image python:3.12-slim)",
+    "entry_point_names": [
+      "compress_messages",
+      "compress_payload",
+      "process_request",
+      "transform_payload"
+    ],
+    "signature": "compress_messages(messages, path, metadata)",
+    "metadata_keys": [
+      "path"
+    ],
+    "mutate_request_default": true,
+    "compression_timeout_seconds": 30.0,
+    "calls_serialized": true,
+    "module_state_persists_within_run": true,
+    "protected_roles": [
+      "system",
+      "developer"
+    ],
+    "first_user_message_stripped": true,
+    "top_level_system_field_stripped": true,
+    "exception_behavior": "HTTP 500 to the agent's LLM request; no platform fallback",
+    "installed_libraries": [
+      "fastapi>=0.115.0",
+      "uvicorn[standard]>=0.30.0",
+      "pydantic>=2.7.0",
+      "nltk>=3.8",
+      "regex>=2023.12.25",
+      "tiktoken==0.12.0",
+      "numpy>=1.24",
+      "scipy>=1.11",
+      "scikit-learn>=1.3",
+      "networkx>=3.2",
+      "summa>=1.2.0",
+      "yake>=0.4.8",
+      "rake-nltk>=1.0.6"
+    ],
+    "agents": {
+      "copilot": {
+        "default": true,
+        "cli": "@github/copilot@1.0.82",
+        "route": "COPILOT_PROVIDER_BASE_URL=http://proxy:8080/ -> compression proxy -> /transform -> compress_messages",
+        "wire_format": "openai chat-completions",
+        "path": "/chat/completions",
+        "evidence": "soma_benchmark backends/copilot/copilot.py:2468; soma auto_run_restarter/service.py:265 matches http://proxy:8080/chat/completions"
+      },
+      "openclaw": {
+        "default": false,
+        "wire_format": "openai-completions",
+        "route": "LLM_BASE_URL -> plain nginx passthrough (no compression proxy); compress_messages is not called on this path",
+        "evidence": "soma sandbox_service/app/compact_bench_executor.py:1218-1225; soma_benchmark backends/openclaw.py:1338-1356"
+      }
+    },
+    "model": "DeepSeek V4 Pro via the DeepSeek provider on OpenRouter; miner runs use the miner's own OpenRouter key"
+  },
+  "scoring": {
+    "source": "soma:mcp_platform/app/api/routes/scoring.py",
+    "token_weights": {
+      "input": 1.0,
+      "cached_input": 0.1,
+      "output": 3.0
+    },
+    "r_min": -2.0,
+    "r_max": 2.0,
+    "bonus_max": 0.1,
+    "bonus_min_extra": 2,
+    "quality_penalty_only_ratio": 0.5,
+    "quality_token_score_ratio": 0.8,
+    "task_score_min": -2.0,
+    "task_score_max": 2.0,
+    "baseline_token_mean": "all baseline runs with valid weighted tokens (resolved or not)",
+    "miner_token_mean": "all miner runs with weighted tokens > 0 (resolved or not)",
+    "doc_discrepancy": "docs/miner/scoring.md describes an older curve (penalty -2..-4, bonus up to 3, clamp [-4,3], resolved-only T_B). Code is authoritative."
+  },
+  "screening": {
+    "source": "soma:mcp_platform/app/services/swebench_screening.py, mcp_platform/app/core/config.py (defaults)",
+    "stage1_quality_epsilon": 0.05,
+    "stage1_token_saving_ratio": 0.0,
+    "stage2_pass_ratio": 0.5,
+    "stage2_min_passed_tasks": 0,
+    "stage2_min_weighted_token_saving_ratio": 0.1,
+    "final_score_excludes_stage": 1
+  },
+  "incentives": {
+    "source": "soma:mcp_platform/app/services/incentive_calculator.py",
+    "layer_weights_by_subset_size": {
+      "3": 0.25,
+      "2": 0.45,
+      "1": 0.3
+    },
+    "category_order": [
+      "short",
+      "medium",
+      "long"
+    ],
+    "category_weights": {
+      "short": 1.0,
+      "medium": 1.0,
+      "long": 1.0
+    },
+    "tie_rel_tol": 1e-12,
+    "tie_abs_tol": 1e-12,
+    "fallback_category": "overall"
+  },
+  "allowed_insertions": {
+    "source": "soma:miner/README_prompting.md",
+    "markers": [
+      "Compressed text starts here",
+      "Compressed text ends here",
+      "[[CMP]]",
+      "[[/CMP]]",
+      "[[Omitted]]",
+      "[[/Omitted]]",
+      "[[deleted]]",
+      "[[/deleted]]",
+      "[[BLOCK X]]",
+      "[[/BLOCK X]]",
+      "Same response as in [[BLOCK X]].",
+      "[[CMP]] source line N [[/CMP]]",
+      "[[Omitted]] source line N ~ source line M Omitted [[/Omitted]]"
+    ],
+    "loop_reasons": [
+      "loop_detected: repeated assistant response",
+      "loop_detected: repeated tool call signature"
+    ]
+  },
+  "unresolved": [
+    {
+      "id": "U-001",
+      "question": "Exact extra fields and user-content form (string vs parts) in Copilot CLI 1.0.82 chat-completions payloads",
+      "needed": "Captured payloads from a local copilot benchmark run ([compression-service][messages.in] log lines)",
+      "blocks": "F-001 acceptance item 3 (real fixtures); not the offline harness",
+      "owner": "user (paid run budget + OpenRouter key)"
+    },
+    {
+      "id": "U-002",
+      "question": "Does the OpenClaw somarizer path ever reach the miner? It POSTs /compress, which the compression service does not serve.",
+      "needed": "Run an openclaw task locally or confirm on Discord",
+      "blocks": "nothing while copilot is the only agent in use",
+      "owner": "harness"
+    },
+    {
+      "id": "U-003",
+      "question": "How a loop guard can end a run from inside compress_messages",
+      "needed": "Pinned-code review of the copilot backend's handling of injected user messages",
+      "blocks": "runtime loop guards (M6)",
+      "owner": "harness"
+    },
+    {
+      "id": "U-004",
+      "question": "Whether every stage-2 passer or only a top-ranked cohort advances to full evaluation",
+      "needed": "Review swebench_orchestrator.py stage-2 ranking",
+      "blocks": "nothing offline",
+      "owner": "harness"
+    },
+    {
+      "id": "U-005",
+      "question": "Competition-specific screening thresholds (code defaults recorded here)",
+      "needed": "Platform config or Discord",
+      "blocks": "release policy margin (R-022)",
+      "owner": "user"
+    }
+  ]
+}

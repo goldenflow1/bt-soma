@@ -1,0 +1,49 @@
+# Versioned acceptance policy (architecture.md sections 23 and 27).
+# Candidates may not edit this file. Changes need a harness spec and invalidate
+# evidence recorded under the previous digest.
+
+version: 1
+
+gates:
+  G0_provenance:
+    pass: upstream lock verifies; spec, format contract and budgets resolve
+    command: python -m harness lock verify
+  G1_contracts:
+    requirements: [R-001, R-002, R-003, R-004, R-005, R-006, R-007, R-009, R-010, R-011, R-012, R-015, R-016, R-017, R-019, R-021]
+    pass: zero findings on every fixture; full test suite passes with zero skips
+    command: python -m harness check && python -m harness test
+  G2_replay:
+    pass: no unexplained prefix edits, unresolved references or missing pinned evidence
+    command: python -m harness check   # R-007 and R-011 run inside the contract suite
+  G3_smoke:
+    pass: fresh small balanced copilot task set completes without contract failures
+    requires: paid budget (configs/budgets.yaml)
+  G4_validation:
+    pass: selection policy below holds across all groups and simulated stage-2 screening passes (R-022)
+    requires: paid budget
+  G5_release:
+    pass: frozen holdout, screening gate and packaged-artifact checks satisfy release policy
+    requires: paid budget, M8 packaging
+
+requirement_stage:
+  # Offline-checkable now vs needing online evidence.
+  offline: [R-001, R-002, R-003, R-004, R-005, R-006, R-007, R-008, R-009, R-010, R-011, R-012, R-013, R-015, R-016, R-017, R-019, R-020, R-021]
+  online: [R-014, R-018, R-022]
+
+latency:
+  hard_limit_s: 30.0          # upstream compression timeout (lock)
+  internal_deadline_s: 5.0    # miner fail-open budget, F-002
+  target_p99_ms: 200          # engineering target on the fixture corpus
+
+promotion_policy:
+  development:
+    hard_contract_failures: 0
+    unexplained_prefix_changes: 0
+    investigate_every_baseline_pass_candidate_fail: true
+    per_group: solve count and official score must not decrease vs champion; at least one group improves
+  release:
+    solve_rate_non_inferiority_margin_pct: 1.0
+    confidence: 0.95 interval, task-cluster resampling within each group
+    too_few_tasks: INCONCLUSIVE
+    screening_stage2_savings_margin: 0.03   # require >= 13% pooled savings when the gate is 10%
+    optional_features_need_own_ablation: true

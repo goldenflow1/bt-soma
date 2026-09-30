@@ -1,0 +1,12 @@
+[project]
+name = "soma-miner"
+version = "0.1.0"
+description = "SOMA context-compression miner and its development harness"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "src"]
+markers = [
+    "upstream: parity tests that need the pinned upstream checkouts in .upstream/",
+]

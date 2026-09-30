@@ -1,0 +1,214 @@
+{
+ "id": "syn-chat-bugfix",
+ "path": "/chat/completions",
+ "provenance": {
+  "kind": "synthetic",
+  "generator": "fixtures/synthetic/build.py",
+  "note": "Hand-built; OpenAI chat-completions as the copilot backend sends through the SOMA proxy (path /chat/completions). Tool names are illustrative, not Copilot CLI's."
+ },
+ "payload": {
+  "model": "deepseek/deepseek-v4-pro",
+  "messages": [
+   {
+    "role": "system",
+    "content": "You are a coding agent working in a repository checkout. Use the provided tools to inspect files, run commands and edit code. Make the failing tests pass without breaking others."
+   },
+   {
+    "role": "user",
+    "content": "QuerySet.bulk_create() does not populate GeneratedField values on returned objects.\nReproduce with tests/bulk_create/tests.py::test_generated_field and fix it."
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_1",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"grep -rn \\\"bulk_create\\\" django/db/models/ tests/bulk_create/ .venv/lib\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_1",
+    "content": "django/db/models/query.py:700:        # bulk_create helper step 0\ndjango/db/models/query.py:707:        # bulk_create helper step 1\ndjango/db/models/query.py:714:        # bulk_create helper step 2\ndjango/db/models/query.py:721:        # bulk_create helper step 3\ndjango/db/models/query.py:728:        # bulk_create helper step 4\ndjango/db/models/query.py:735:        # bulk_create helper step 5\ndjango/db/models/query.py:742:        # bulk_create helper step 6\ndjango/db/models/query.py:749:        # bulk_create helper step 7\ndjango/db/models/query.py:756:        # bulk_create helper step 8\ndjango/db/models/query.py:763:        # bulk_create helper step 9\ndjango/db/models/query.py:770:        # bulk_create helper step 10\ndjango/db/models/query.py:777:        # bulk_create helper step 11\ndjango/db/models/sql/compiler.py:1600:    def bulk_create_0(self):\ndjango/db/models/sql/compiler.py:1601:    def bulk_create_1(self):\ndjango/db/models/sql/compiler.py:1602:    def bulk_create_2(self):\ndjango/db/models/sql/compiler.py:1603:    def bulk_create_3(self):\ndjango/db/models/sql/compiler.py:1604:    def bulk_create_4(self):\ndjango/db/models/sql/compiler.py:1605:    def bulk_create_5(self):\ntests/bulk_create/tests.py:40:    def test_bulk_create_case_0(self):\ntests/bulk_create/tests.py:49:    def test_bulk_create_case_1(self):\ntests/bulk_create/tests.py:58:    def test_bulk_create_case_2(self):\ntests/bulk_create/tests.py:67:    def test_bulk_create_case_3(self):\ntests/bulk_create/tests.py:76:    def test_bulk_create_case_4(self):\ntests/bulk_create/tests.py:85:    def test_bulk_create_case_5(self):\ntests/bulk_create/tests.py:94:    def test_bulk_create_case_6(self):\ntests/bulk_create/tests.py:103:    def test_bulk_create_case_7(self):\ntests/bulk_create/tests.py:112:    def test_bulk_create_case_8(self):\ntests/bulk_create/tests.py:121:    def test_bulk_create_case_9(self):\ntests/bulk_create/tests.py:130:    def test_bulk_create_case_10(self):\ntests/bulk_create/tests.py:139:    def test_bulk_create_case_11(self):\ntests/bulk_create/tests.py:148:    def test_bulk_create_case_12(self):\ntests/bulk_create/tests.py:157:    def test_bulk_create_case_13(self):\ntests/bulk_create/tests.py:166:    def test_bulk_create_case_14(self):\ntests/bulk_create/tests.py:175:    def test_bulk_create_case_15(self):\ntests/bulk_create/tests.py:184:    def test_bulk_create_case_16(self):\ntests/bulk_create/tests.py:193:    def test_bulk_create_case_17(self):\ntests/bulk_create/tests.py:202:    def test_bulk_create_case_18(self):\ntests/bulk_create/tests.py:211:    def test_bulk_create_case_19(self):\n.venv/lib/python3.12/site-packages/pkg/mod_0.py:0:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_1.py:1:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_2.py:2:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_3.py:3:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_4.py:4:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_5.py:5:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_6.py:6:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_7.py:7:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_8.py:8:bulk_create = None\n.venv/lib/python3.12/site-packages/pkg/mod_9.py:9:bulk_create = None"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_2",
+      "type": "function",
+      "function": {
+       "name": "read",
+       "arguments": "{\"path\": \"django/db/models/query.py\", \"offset\": 700, \"limit\": 80}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_2",
+    "content": "   700\t        step_700 = self._prepare(objs, 0)\n   701\t        step_701 = self._prepare(objs, 1)\n   702\t        step_702 = self._prepare(objs, 2)\n   703\t        step_703 = self._prepare(objs, 3)\n   704\t        step_704 = self._prepare(objs, 4)\n   705\t        step_705 = self._prepare(objs, 5)\n   706\t        step_706 = self._prepare(objs, 6)\n   707\t        step_707 = self._prepare(objs, 0)\n   708\t        step_708 = self._prepare(objs, 1)\n   709\t        step_709 = self._prepare(objs, 2)\n   710\t    def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):\n   711\t        \"\"\"Insert each of the instances into the database.\"\"\"\n   712\t        step_712 = self._prepare(objs, 5)\n   713\t        step_713 = self._prepare(objs, 6)\n   714\t        step_714 = self._prepare(objs, 0)\n   715\t        step_715 = self._prepare(objs, 1)\n   716\t        step_716 = self._prepare(objs, 2)\n   717\t        step_717 = self._prepare(objs, 3)\n   718\t        step_718 = self._prepare(objs, 4)\n   719\t        step_719 = self._prepare(objs, 5)\n   720\t        step_720 = self._prepare(objs, 6)\n   721\t        step_721 = self._prepare(objs, 0)\n   722\t        step_722 = self._prepare(objs, 1)\n   723\t        step_723 = self._prepare(objs, 2)\n   724\t        step_724 = self._prepare(objs, 3)\n   725\t        step_725 = self._prepare(objs, 4)\n   726\t        step_726 = self._prepare(objs, 5)\n   727\t        step_727 = self._prepare(objs, 6)\n   728\t        step_728 = self._prepare(objs, 0)\n   729\t        step_729 = self._prepare(objs, 1)\n   730\t        fields = [f for f in opts.concrete_fields if not f.generated]\n   731\t        step_731 = self._prepare(objs, 3)\n   732\t        step_732 = self._prepare(objs, 4)\n   733\t        step_733 = self._prepare(objs, 5)\n   734\t        step_734 = self._prepare(objs, 6)\n   735\t        step_735 = self._prepare(objs, 0)\n   736\t        step_736 = self._prepare(objs, 1)\n   737\t        step_737 = self._prepare(objs, 2)\n   738\t        step_738 = self._prepare(objs, 3)\n   739\t        step_739 = self._prepare(objs, 4)\n   740\t        step_740 = self._prepare(objs, 5)\n   741\t        step_741 = self._prepare(objs, 6)\n   742\t        step_742 = self._prepare(objs, 0)\n   743\t        step_743 = self._prepare(objs, 1)\n   744\t        step_744 = self._prepare(objs, 2)\n   745\t        step_745 = self._prepare(objs, 3)\n   746\t        step_746 = self._prepare(objs, 4)\n   747\t        step_747 = self._prepare(objs, 5)\n   748\t        step_748 = self._prepare(objs, 6)\n   749\t        step_749 = self._prepare(objs, 0)\n   750\t        step_750 = self._prepare(objs, 1)\n   751\t        step_751 = self._prepare(objs, 2)\n   752\t        step_752 = self._prepare(objs, 3)\n   753\t        step_753 = self._prepare(objs, 4)\n   754\t        step_754 = self._prepare(objs, 5)\n   755\t        step_755 = self._prepare(objs, 6)\n   756\t        step_756 = self._prepare(objs, 0)\n   757\t        step_757 = self._prepare(objs, 1)\n   758\t        step_758 = self._prepare(objs, 2)\n   759\t        step_759 = self._prepare(objs, 3)\n   760\t        step_760 = self._prepare(objs, 4)\n   761\t        step_761 = self._prepare(objs, 5)\n   762\t        step_762 = self._prepare(objs, 6)\n   763\t        step_763 = self._prepare(objs, 0)\n   764\t        step_764 = self._prepare(objs, 1)\n   765\t        step_765 = self._prepare(objs, 2)\n   766\t        step_766 = self._prepare(objs, 3)\n   767\t        step_767 = self._prepare(objs, 4)\n   768\t        step_768 = self._prepare(objs, 5)\n   769\t        step_769 = self._prepare(objs, 6)\n   770\t        step_770 = self._prepare(objs, 0)\n   771\t        step_771 = self._prepare(objs, 1)\n   772\t        step_772 = self._prepare(objs, 2)\n   773\t        step_773 = self._prepare(objs, 3)\n   774\t        step_774 = self._prepare(objs, 4)\n   775\t        step_775 = self._prepare(objs, 5)\n   776\t        step_776 = self._prepare(objs, 6)\n   777\t        step_777 = self._prepare(objs, 0)\n   778\t        step_778 = self._prepare(objs, 1)\n   779\t        step_779 = self._prepare(objs, 2)"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_3",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"python -m pytest tests/bulk_create/tests.py -q\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_3",
+    "content": "============================= test session starts ==============================\nplatform linux -- Python 3.12.3, pytest-8.3.3, pluggy-1.5.0\nrootdir: /testbed\ncollected 129 items\n\ntests/bulk_create/tests.py ............................................................ [  5%]\ntests/bulk_create/tests.py ............................................................ [ 10%]\ntests/bulk_create/tests.py ............................................................ [ 15%]\ntests/bulk_create/tests.py ............................................................ [ 20%]\ntests/bulk_create/tests.py ............................................................ [ 25%]\ntests/bulk_create/tests.py ............................................................ [ 30%]\ntests/bulk_create/tests.py ............................................................ [ 35%]\ntests/bulk_create/tests.py ............................................................ [ 40%]\ntests/bulk_create/tests.py ............................................................ [ 45%]\ntests/bulk_create/tests.py ............................................................ [ 50%]\ntests/bulk_create/tests.py ............................................................ [ 55%]\ntests/bulk_create/tests.py ............................................................ [ 60%]\ntests/bulk_create/tests.py ............................................................ [ 65%]\ntests/bulk_create/tests.py ............................................................ [ 70%]\ntests/bulk_create/tests.py ............................................................ [ 75%]\ntests/bulk_create/tests.py ............................................................ [ 80%]\ntests/bulk_create/tests.py ............................................................ [ 85%]\ntests/bulk_create/tests.py ............................................................ [ 90%]\ntests/bulk_create/tests.py ............................................................ [ 95%]\n\n=================================== FAILURES ===================================\n__________________________ test_generated_field ________________________________\n\n    def test_generated_field(self):\n        objs = GeneratedModel.objects.bulk_create([GeneratedModel(a=1)])\n>       assert objs[0].a_plus_one == 2\nE       AssertionError: assert None == 2\nE        +  where None = <GeneratedModel: GeneratedModel object (1)>.a_plus_one\n\ntests/bulk_create/tests.py:812: AssertionError\n=========================== short test summary info ============================\nFAILED tests/bulk_create/tests.py::test_generated_field - AssertionError: assert None == 2\n======================== 1 failed, 128 passed in 14.20s ========================"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_4",
+      "type": "function",
+      "function": {
+       "name": "edit",
+       "arguments": "{\"path\": \"django/db/models/query.py\", \"oldText\": \"fields = [f for f in opts.concrete_fields if not f.generated]\", \"newText\": \"fields = [f for f in opts.concrete_fields if not f.generated]\\n        returning = opts.db_returning_fields\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_4",
+    "content": "Successfully replaced text in django/db/models/query.py."
+   },
+   {
+    "role": "user",
+    "content": "Continue with the task."
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_5",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"python -m pytest tests/bulk_create/tests.py::test_generated_field -q\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_5",
+    "content": "1 passed in 0.41s"
+   },
+   {
+    "role": "assistant",
+    "content": "The fix makes bulk_create() read back generated fields; the failing test now passes."
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "exec",
+     "description": "Run a shell command",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "command": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "command"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "read",
+     "description": "Read a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "offset": {
+        "type": "integer"
+       },
+       "limit": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "path"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "edit",
+     "description": "Replace text in a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "oldText": {
+        "type": "string"
+       },
+       "newText": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "path",
+       "oldText",
+       "newText"
+      ]
+     }
+    }
+   }
+  ],
+  "stream": false
+ },
+ "evidence": [
+  {
+   "tool_call_id": "call_2",
+   "must_contain": [
+    "def bulk_create(self, objs",
+    "   730\t"
+   ]
+  },
+  {
+   "tool_call_id": "call_3",
+   "must_contain": [
+    "FAILED tests/bulk_create/tests.py::test_generated_field",
+    "E       AssertionError: assert None == 2",
+    "tests/bulk_create/tests.py:812: AssertionError",
+    "1 failed, 128 passed"
+   ]
+  }
+ ]
+}

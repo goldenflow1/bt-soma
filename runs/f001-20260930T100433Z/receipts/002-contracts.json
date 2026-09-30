@@ -1,0 +1,42 @@
+{
+ "kind": "contracts",
+ "command": "python -m harness check --candidate src/soma_miner/miner.py",
+ "inputs": {
+  "src/soma_miner/miner.py": "024da010bc0384173831f0e50867bcffd34a63e4189a386e14c04fd784737a30",
+  "fixtures": "e48d72ebafeb28d7be4fb5bea4b3c142bd8e9887e5bc8d397384133195e933e8"
+ },
+ "result": {
+  "candidate": "/home/goldenflow/bittensor/soma/src/soma_miner/miner.py",
+  "fixtures": [
+   "syn-chat-bugfix",
+   "syn-chat-minimal",
+   "syn-chat-parallel-multipart",
+   "syn-chat-repeated-reads"
+  ],
+  "passed": true,
+  "findings": [],
+  "stats": {
+   "calls": 15,
+   "latency_ms_p50": 0.046,
+   "latency_ms_p99": 0.093,
+   "bytes_in": 86508,
+   "bytes_out": 86508,
+   "byte_reduction": 0.0,
+   "editable_locations": "OpenAI chat-completions: text of role=tool messages (string content or type=text parts)",
+   "per_call_timeout_s": 30.0
+  }
+ },
+ "passed": true,
+ "reason": "all contracts hold",
+ "started_at": "2026-09-30T10:04:33+00:00",
+ "finished_at": "2026-09-30T10:04:33+00:00",
+ "digests": {
+  "candidate_src": "9649c190c5beac91d681f5335470179dccecfe18ce6068cba45b7277eb3dce0b",
+  "harness": "28fee082ee4c4392a06d8ebdb7af2c7cfbb1173ea8591be3258ac3904ed57eff",
+  "specs": "c39782d5fdc2602188dc6f81750212b878c7dc97f02de062c9fa2481f6916d6f",
+  "upstream_lock": "0410a686fc8bbe994fba916939c4646c00b2ed45d6e3d3d8e10091a2b20978c6",
+  "acceptance": "343aed3618da3f1bad4b0322ece66da39c780d6c4b9cdf4a01e335c2bdcc60da",
+  "fixtures": "e48d72ebafeb28d7be4fb5bea4b3c142bd8e9887e5bc8d397384133195e933e8",
+  "configs": "b2842282f5da2633eeca37b348a2433b994f6f1af76f147fbd3b2387c9e5386b"
+ }
+}

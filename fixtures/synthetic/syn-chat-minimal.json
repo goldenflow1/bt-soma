@@ -1,0 +1,117 @@
+{
+ "id": "syn-chat-minimal",
+ "path": "/chat/completions",
+ "provenance": {
+  "kind": "synthetic",
+  "generator": "fixtures/synthetic/build.py",
+  "note": "Hand-built; OpenAI chat-completions as the copilot backend sends through the SOMA proxy (path /chat/completions). Tool names are illustrative, not Copilot CLI's."
+ },
+ "payload": {
+  "model": "deepseek/deepseek-v4-pro",
+  "messages": [
+   {
+    "role": "system",
+    "content": "You are a coding agent working in a repository checkout. Use the provided tools to inspect files, run commands and edit code. Make the failing tests pass without breaking others."
+   },
+   {
+    "role": "user",
+    "content": "Print the Python version used by the repository."
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_1",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"python --version\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_1",
+    "content": "Python 3.12.3"
+   },
+   {
+    "role": "assistant",
+    "content": "The repository uses Python 3.12.3."
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "exec",
+     "description": "Run a shell command",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "command": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "command"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "read",
+     "description": "Read a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "offset": {
+        "type": "integer"
+       },
+       "limit": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "path"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "edit",
+     "description": "Replace text in a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "oldText": {
+        "type": "string"
+       },
+       "newText": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "path",
+       "oldText",
+       "newText"
+      ]
+     }
+    }
+   }
+  ],
+  "stream": false
+ },
+ "evidence": []
+}

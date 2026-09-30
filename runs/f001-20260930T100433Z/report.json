@@ -1,0 +1,104 @@
+{
+ "experiment_id": "f001-20260930T100433Z",
+ "spec": "specs/features/F-001-identity.md",
+ "outcome": "BLOCKED",
+ "manifest_digests": {
+  "candidate_src": "9649c190c5beac91d681f5335470179dccecfe18ce6068cba45b7277eb3dce0b",
+  "harness": "28fee082ee4c4392a06d8ebdb7af2c7cfbb1173ea8591be3258ac3904ed57eff",
+  "specs": "c39782d5fdc2602188dc6f81750212b878c7dc97f02de062c9fa2481f6916d6f",
+  "upstream_lock": "0410a686fc8bbe994fba916939c4646c00b2ed45d6e3d3d8e10091a2b20978c6",
+  "acceptance": "343aed3618da3f1bad4b0322ece66da39c780d6c4b9cdf4a01e335c2bdcc60da",
+  "fixtures": "e48d72ebafeb28d7be4fb5bea4b3c142bd8e9887e5bc8d397384133195e933e8",
+  "configs": "b2842282f5da2633eeca37b348a2433b994f6f1af76f147fbd3b2387c9e5386b"
+ },
+ "current_digests": {
+  "candidate_src": "9649c190c5beac91d681f5335470179dccecfe18ce6068cba45b7277eb3dce0b",
+  "harness": "28fee082ee4c4392a06d8ebdb7af2c7cfbb1173ea8591be3258ac3904ed57eff",
+  "specs": "c39782d5fdc2602188dc6f81750212b878c7dc97f02de062c9fa2481f6916d6f",
+  "upstream_lock": "0410a686fc8bbe994fba916939c4646c00b2ed45d6e3d3d8e10091a2b20978c6",
+  "acceptance": "343aed3618da3f1bad4b0322ece66da39c780d6c4b9cdf4a01e335c2bdcc60da",
+  "fixtures": "e48d72ebafeb28d7be4fb5bea4b3c142bd8e9887e5bc8d397384133195e933e8",
+  "configs": "b2842282f5da2633eeca37b348a2433b994f6f1af76f147fbd3b2387c9e5386b"
+ },
+ "tests": "86 passed in 70.28s (0:01:10)",
+ "acceptance": [
+  {
+   "item": "1 upstream commits and runtime contract resolved",
+   "status": "PASS",
+   "evidence": "4 repos pinned; 5 open questions recorded"
+  },
+  {
+   "item": "2 proxy strip/restore copy matches upstream",
+   "status": "PASS",
+   "evidence": "tests/contracts/test_proxy_view.py"
+  },
+  {
+   "item": "3 captured copilot payloads in the stripped view",
+   "status": "BLOCKED",
+   "evidence": "0 captured fixtures; blocked by U-001 (needs a paid local copilot run)"
+  },
+  {
+   "item": "4 fingerprints, protected checks, mutants rejected",
+   "status": "PASS",
+   "evidence": "tests/contracts/test_suite.py (16 mutants, 1 positive control)"
+  },
+  {
+   "item": "5 scorer, contest and screening parity",
+   "status": "PASS",
+   "evidence": "tests/scoring/*"
+  },
+  {
+   "item": "6 manifest, run status, timeouts, budgets, resume",
+   "status": "PASS",
+   "evidence": "tests/harness/test_evidence.py; harness/invoke.py"
+  },
+  {
+   "item": "7 commands registered",
+   "status": "PASS",
+   "evidence": "python -m harness --help"
+  },
+  {
+   "item": "identity candidate passes contracts",
+   "status": "PASS",
+   "evidence": "15 calls, 0 findings"
+  }
+ ],
+ "unresolved": [
+  {
+   "id": "U-001",
+   "question": "Exact extra fields and user-content form (string vs parts) in Copilot CLI 1.0.82 chat-completions payloads",
+   "needed": "Captured payloads from a local copilot benchmark run ([compression-service][messages.in] log lines)",
+   "blocks": "F-001 acceptance item 3 (real fixtures); not the offline harness",
+   "owner": "user (paid run budget + OpenRouter key)"
+  },
+  {
+   "id": "U-002",
+   "question": "Does the OpenClaw somarizer path ever reach the miner? It POSTs /compress, which the compression service does not serve.",
+   "needed": "Run an openclaw task locally or confirm on Discord",
+   "blocks": "nothing while copilot is the only agent in use",
+   "owner": "harness"
+  },
+  {
+   "id": "U-003",
+   "question": "How a loop guard can end a run from inside compress_messages",
+   "needed": "Pinned-code review of the copilot backend's handling of injected user messages",
+   "blocks": "runtime loop guards (M6)",
+   "owner": "harness"
+  },
+  {
+   "id": "U-004",
+   "question": "Whether every stage-2 passer or only a top-ranked cohort advances to full evaluation",
+   "needed": "Review swebench_orchestrator.py stage-2 ranking",
+   "blocks": "nothing offline",
+   "owner": "harness"
+  },
+  {
+   "id": "U-005",
+   "question": "Competition-specific screening thresholds (code defaults recorded here)",
+   "needed": "Platform config or Discord",
+   "blocks": "release policy margin (R-022)",
+   "owner": "user"
+  }
+ ],
+ "generated_at": "2026-09-30T10:05:44+00:00"
+}

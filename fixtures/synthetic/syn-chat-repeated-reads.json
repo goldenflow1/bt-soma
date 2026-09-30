@@ -1,0 +1,181 @@
+{
+ "id": "syn-chat-repeated-reads",
+ "path": "/chat/completions",
+ "provenance": {
+  "kind": "synthetic",
+  "generator": "fixtures/synthetic/build.py",
+  "note": "Hand-built; OpenAI chat-completions as the copilot backend sends through the SOMA proxy (path /chat/completions). Tool names are illustrative, not Copilot CLI's."
+ },
+ "payload": {
+  "model": "deepseek/deepseek-v4-pro",
+  "messages": [
+   {
+    "role": "system",
+    "content": "You are a coding agent working in a repository checkout. Use the provided tools to inspect files, run commands and edit code. Make the failing tests pass without breaking others."
+   },
+   {
+    "role": "user",
+    "content": "Install the dev requirements and make utils.slugify handle unicode."
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_1",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"pip install -r requirements-dev.txt\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_1",
+    "content": "Collecting package-0==1.0.0\nCollecting package-1==1.1.0\nCollecting package-2==1.2.0\nCollecting package-3==1.3.0\nCollecting package-4==1.4.0\nCollecting package-5==1.5.0\nCollecting package-6==1.6.0\nCollecting package-7==1.7.0\nCollecting package-8==1.8.0\nCollecting package-9==1.9.0\nCollecting package-10==1.10.0\nCollecting package-11==1.11.0\nCollecting package-12==1.12.0\nCollecting package-13==1.13.0\nCollecting package-14==1.14.0\n  Downloading package_0-1.0.0-py3-none-any.whl (20 kB)\n  Downloading package_1-1.1.0-py3-none-any.whl (33 kB)\n  Downloading package_2-1.2.0-py3-none-any.whl (46 kB)\n  Downloading package_3-1.3.0-py3-none-any.whl (59 kB)\n  Downloading package_4-1.4.0-py3-none-any.whl (72 kB)\n  Downloading package_5-1.5.0-py3-none-any.whl (85 kB)\n  Downloading package_6-1.6.0-py3-none-any.whl (98 kB)\n  Downloading package_7-1.7.0-py3-none-any.whl (111 kB)\n  Downloading package_8-1.8.0-py3-none-any.whl (124 kB)\n  Downloading package_9-1.9.0-py3-none-any.whl (137 kB)\n  Downloading package_10-1.10.0-py3-none-any.whl (150 kB)\n  Downloading package_11-1.11.0-py3-none-any.whl (163 kB)\n  Downloading package_12-1.12.0-py3-none-any.whl (176 kB)\n  Downloading package_13-1.13.0-py3-none-any.whl (189 kB)\n  Downloading package_14-1.14.0-py3-none-any.whl (202 kB)\nInstalling collected packages: package-0, package-1, package-2, package-3, package-4, package-5, package-6, package-7, package-8, package-9, package-10, package-11, package-12, package-13, package-14\nSuccessfully installed package-0-1.0.0 package-1-1.1.0 package-2-1.2.0 package-3-1.3.0 package-4-1.4.0 package-5-1.5.0 package-6-1.6.0 package-7-1.7.0 package-8-1.8.0 package-9-1.9.0 package-10-1.10.0 package-11-1.11.0 package-12-1.12.0 package-13-1.13.0 package-14-1.14.0"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_2",
+      "type": "function",
+      "function": {
+       "name": "read",
+       "arguments": "{\"path\": \"utils/text.py\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_2",
+    "content": "     1\t        step_1 = self._prepare(objs, 1)\n     2\t        step_2 = self._prepare(objs, 2)\n     3\t        step_3 = self._prepare(objs, 3)\n     4\t        step_4 = self._prepare(objs, 4)\n     5\t        step_5 = self._prepare(objs, 5)\n     6\t        step_6 = self._prepare(objs, 6)\n     7\t        step_7 = self._prepare(objs, 0)\n     8\t        step_8 = self._prepare(objs, 1)\n     9\t        step_9 = self._prepare(objs, 2)\n    10\t        step_10 = self._prepare(objs, 3)\n    11\t    def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):\n    12\t        \"\"\"Insert each of the instances into the database.\"\"\"\n    13\t        step_13 = self._prepare(objs, 6)\n    14\t        step_14 = self._prepare(objs, 0)\n    15\t        step_15 = self._prepare(objs, 1)\n    16\t        step_16 = self._prepare(objs, 2)\n    17\t        step_17 = self._prepare(objs, 3)\n    18\t        step_18 = self._prepare(objs, 4)\n    19\t        step_19 = self._prepare(objs, 5)\n    20\t        step_20 = self._prepare(objs, 6)\n    21\t        step_21 = self._prepare(objs, 0)\n    22\t        step_22 = self._prepare(objs, 1)\n    23\t        step_23 = self._prepare(objs, 2)\n    24\t        step_24 = self._prepare(objs, 3)\n    25\t        step_25 = self._prepare(objs, 4)\n    26\t        step_26 = self._prepare(objs, 5)\n    27\t        step_27 = self._prepare(objs, 6)\n    28\t        step_28 = self._prepare(objs, 0)\n    29\t        step_29 = self._prepare(objs, 1)\n    30\t        step_30 = self._prepare(objs, 2)\n    31\t        fields = [f for f in opts.concrete_fields if not f.generated]\n    32\t        step_32 = self._prepare(objs, 4)\n    33\t        step_33 = self._prepare(objs, 5)\n    34\t        step_34 = self._prepare(objs, 6)\n    35\t        step_35 = self._prepare(objs, 0)\n    36\t        step_36 = self._prepare(objs, 1)\n    37\t        step_37 = self._prepare(objs, 2)\n    38\t        step_38 = self._prepare(objs, 3)\n    39\t        step_39 = self._prepare(objs, 4)\n    40\t        step_40 = self._prepare(objs, 5)"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_3",
+      "type": "function",
+      "function": {
+       "name": "read",
+       "arguments": "{\"path\": \"utils/text.py\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_3",
+    "content": "     1\t        step_1 = self._prepare(objs, 1)\n     2\t        step_2 = self._prepare(objs, 2)\n     3\t        step_3 = self._prepare(objs, 3)\n     4\t        step_4 = self._prepare(objs, 4)\n     5\t        step_5 = self._prepare(objs, 5)\n     6\t        step_6 = self._prepare(objs, 6)\n     7\t        step_7 = self._prepare(objs, 0)\n     8\t        step_8 = self._prepare(objs, 1)\n     9\t        step_9 = self._prepare(objs, 2)\n    10\t        step_10 = self._prepare(objs, 3)\n    11\t    def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):\n    12\t        \"\"\"Insert each of the instances into the database.\"\"\"\n    13\t        step_13 = self._prepare(objs, 6)\n    14\t        step_14 = self._prepare(objs, 0)\n    15\t        step_15 = self._prepare(objs, 1)\n    16\t        step_16 = self._prepare(objs, 2)\n    17\t        step_17 = self._prepare(objs, 3)\n    18\t        step_18 = self._prepare(objs, 4)\n    19\t        step_19 = self._prepare(objs, 5)\n    20\t        step_20 = self._prepare(objs, 6)\n    21\t        step_21 = self._prepare(objs, 0)\n    22\t        step_22 = self._prepare(objs, 1)\n    23\t        step_23 = self._prepare(objs, 2)\n    24\t        step_24 = self._prepare(objs, 3)\n    25\t        step_25 = self._prepare(objs, 4)\n    26\t        step_26 = self._prepare(objs, 5)\n    27\t        step_27 = self._prepare(objs, 6)\n    28\t        step_28 = self._prepare(objs, 0)\n    29\t        step_29 = self._prepare(objs, 1)\n    30\t        step_30 = self._prepare(objs, 2)\n    31\t        fields = [f for f in opts.concrete_fields if not f.generated]\n    32\t        step_32 = self._prepare(objs, 4)\n    33\t        step_33 = self._prepare(objs, 5)\n    34\t        step_34 = self._prepare(objs, 6)\n    35\t        step_35 = self._prepare(objs, 0)\n    36\t        step_36 = self._prepare(objs, 1)\n    37\t        step_37 = self._prepare(objs, 2)\n    38\t        step_38 = self._prepare(objs, 3)\n    39\t        step_39 = self._prepare(objs, 4)\n    40\t        step_40 = self._prepare(objs, 5)"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "id": "call_4",
+      "type": "function",
+      "function": {
+       "name": "read",
+       "arguments": "{\"path\": \"utils/text.py\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_4",
+    "content": "     1\t        step_1 = self._prepare(objs, 1)\n     2\t        step_2 = self._prepare(objs, 2)\n     3\t        step_3 = self._prepare(objs, 3)\n     4\t        step_4 = self._prepare(objs, 4)\n     5\t        step_5 = self._prepare(objs, 5)\n     6\t        step_6 = self._prepare(objs, 6)\n     7\t        step_7 = self._prepare(objs, 0)\n     8\t        step_8 = self._prepare(objs, 1)\n     9\t        step_9 = self._prepare(objs, 2)\n    10\t        step_10 = self._prepare(objs, 3)\n    11\t    def bulk_create(self, objs, batch_size=None, ignore_conflicts=False):\n    12\t        \"\"\"Insert each of the instances into the database.\"\"\"\n    13\t        step_13 = self._prepare(objs, 6)\n    14\t        step_14 = self._prepare(objs, 0)\n    15\t        step_15 = self._prepare(objs, 1)\n    16\t        step_16 = self._prepare(objs, 2)\n    17\t        step_17 = self._prepare(objs, 3)\n    18\t        step_18 = self._prepare(objs, 4)\n    19\t        step_19 = self._prepare(objs, 5)\n    20\t        step_20 = self._prepare(objs, 6)\n    21\t        step_21 = self._prepare(objs, 0)\n    22\t        step_22 = self._prepare(objs, 1)\n    23\t        step_23 = self._prepare(objs, 2)\n    24\t        step_24 = self._prepare(objs, 3)\n    25\t        step_25 = self._prepare(objs, 4)\n    26\t        step_26 = self._prepare(objs, 5)\n    27\t        step_27 = self._prepare(objs, 6)\n    28\t        step_28 = self._prepare(objs, 0)\n    29\t        step_29 = self._prepare(objs, 1)\n    30\t        step_30 = self._prepare(objs, 2)\n    31\t        fields = [f for f in opts.concrete_fields if not f.generated]\n    32\t        step_32 = self._prepare(objs, 4)\n    33\t        step_33 = self._prepare(objs, 5)\n    34\t        step_34 = self._prepare(objs, 6)\n    35\t        step_35 = self._prepare(objs, 0)\n    36\t        step_36 = self._prepare(objs, 1)\n    37\t        step_37 = self._prepare(objs, 2)\n    38\t        step_38 = self._prepare(objs, 3)\n    39\t        step_39 = self._prepare(objs, 4)\n    40\t        step_40 = self._prepare(objs, 5)"
+   },
+   {
+    "role": "assistant",
+    "content": "The file is unchanged between reads; the bug is in the normalization step."
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "exec",
+     "description": "Run a shell command",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "command": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "command"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "read",
+     "description": "Read a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "offset": {
+        "type": "integer"
+       },
+       "limit": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "path"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "edit",
+     "description": "Replace text in a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "oldText": {
+        "type": "string"
+       },
+       "newText": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "path",
+       "oldText",
+       "newText"
+      ]
+     }
+    }
+   }
+  ],
+  "stream": false
+ },
+ "evidence": [
+  {
+   "tool_call_id": "call_1",
+   "must_contain": [
+    "Successfully installed"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Pinned upstream checkouts, materialized by `python -m harness lock fetch`.
+.upstream/
+
+# Experiment evidence is kept, but scratch outputs are not.
+runs/_scratch/
+
+# Credentials never enter the repository.
+.env
+*.key

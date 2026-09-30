@@ -1,0 +1,29 @@
+{
+ "kind": "tests",
+ "command": "python -m pytest -q",
+ "inputs": {
+  "harness": "28fee082ee4c4392a06d8ebdb7af2c7cfbb1173ea8591be3258ac3904ed57eff",
+  "tests": "6b178f24a5dbcba0c72a9bd66ee1439705a583b28bb0cb212c730ff43e9eaafd"
+ },
+ "result": {
+  "exit_code": 0,
+  "summary": "86 passed in 70.28s (0:01:10)",
+  "counts": {
+   "passed": 86
+  },
+  "tail": "........................................................................ [ 83%]\n..............                                                           [100%]\n86 passed in 70.28s (0:01:10)\n"
+ },
+ "passed": true,
+ "reason": "86 passed in 70.28s (0:01:10)",
+ "started_at": "2026-09-30T10:04:33+00:00",
+ "finished_at": "2026-09-30T10:05:44+00:00",
+ "digests": {
+  "candidate_src": "9649c190c5beac91d681f5335470179dccecfe18ce6068cba45b7277eb3dce0b",
+  "harness": "28fee082ee4c4392a06d8ebdb7af2c7cfbb1173ea8591be3258ac3904ed57eff",
+  "specs": "c39782d5fdc2602188dc6f81750212b878c7dc97f02de062c9fa2481f6916d6f",
+  "upstream_lock": "0410a686fc8bbe994fba916939c4646c00b2ed45d6e3d3d8e10091a2b20978c6",
+  "acceptance": "343aed3618da3f1bad4b0322ece66da39c780d6c4b9cdf4a01e335c2bdcc60da",
+  "fixtures": "e48d72ebafeb28d7be4fb5bea4b3c142bd8e9887e5bc8d397384133195e933e8",
+  "configs": "b2842282f5da2633eeca37b348a2433b994f6f1af76f147fbd3b2387c9e5386b"
+ }
+}

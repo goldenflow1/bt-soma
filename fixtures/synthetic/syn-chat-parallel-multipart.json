@@ -1,0 +1,154 @@
+{
+ "id": "syn-chat-parallel-multipart",
+ "path": "/chat/completions",
+ "provenance": {
+  "kind": "synthetic",
+  "generator": "fixtures/synthetic/build.py",
+  "note": "Hand-built; OpenAI chat-completions as the copilot backend sends through the SOMA proxy (path /chat/completions). Tool names are illustrative, not Copilot CLI's."
+ },
+ "payload": {
+  "model": "deepseek/deepseek-v4-pro",
+  "messages": [
+   {
+    "role": "system",
+    "content": "You are a coding agent working in a repository checkout. Use the provided tools to inspect files, run commands and edit code. Make the failing tests pass without breaking others."
+   },
+   {
+    "role": "user",
+    "content": "The CLI crashes when --config points to a directory. Fix it."
+   },
+   {
+    "role": "assistant",
+    "content": "I'll look at the loader and reproduce the crash.",
+    "tool_calls": [
+     {
+      "id": "call_a",
+      "type": "function",
+      "function": {
+       "name": "read",
+       "arguments": "{\"path\": \"cli/config.py\"}"
+      }
+     },
+     {
+      "id": "call_b",
+      "type": "function",
+      "function": {
+       "name": "exec",
+       "arguments": "{\"command\": \"python -m cli --config /tmp\"}"
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_a",
+    "content": [
+     {
+      "type": "text",
+      "text": "   1\timport os\n   2\t\n   3\tdef load(path):\n   4\t    with open(path) as fh:\n   5\t        return fh.read()"
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "tool_call_id": "call_b",
+    "content": [
+     {
+      "type": "text",
+      "text": "Traceback (most recent call last):\n  File \"cli/config.py\", line 4, in load\nIsADirectoryError: [Errno 21] Is a directory: '/tmp'"
+     },
+     {
+      "type": "image_url",
+      "image_url": {
+       "url": "data:image/png;base64,iVBORw0KGgo="
+      }
+     }
+    ]
+   },
+   {
+    "role": "assistant",
+    "content": "load() must reject directories before opening them."
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "exec",
+     "description": "Run a shell command",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "command": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "command"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "read",
+     "description": "Read a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "offset": {
+        "type": "integer"
+       },
+       "limit": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "path"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "edit",
+     "description": "Replace text in a file",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string"
+       },
+       "oldText": {
+        "type": "string"
+       },
+       "newText": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "path",
+       "oldText",
+       "newText"
+      ]
+     }
+    }
+   }
+  ],
+  "stream": false
+ },
+ "evidence": [
+  {
+   "tool_call_id": "call_b",
+   "must_contain": [
+    "IsADirectoryError",
+    "File \"cli/config.py\", line 4"
+   ]
+  }
+ ]
+}
